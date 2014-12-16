@@ -45,7 +45,7 @@ ruby_block "insert_line" do
     file.insert_line_after_match("index.php", "#{line1}")
     file.write_file
   end
-not_if "grep -q #{line1} /opt/sites-available/crs_web_test""
+not_if "grep -q #{line1} /opt/sites-available/crs_web_test"
 end
 
 

@@ -1,7 +1,7 @@
 server {
   listen   80;
   server_name  test;
-  access_log  <%= node[:nginx][:log_dir] %>/test.access.log;
+  access_log  /test.access.log;
 
   location / {
     root   test;
@@ -36,17 +36,13 @@ server {
 server {
   listen   443;
   server_name  test;
-  access_log  <%= node[:nginx][:log_dir] %>/test-ssl.access.log;
+  access_log /test-ssl.access.log;
   
   ssl on;
-  ssl_certificate <%= node[:nginx][:dir] %>/ssl/test.crt;
-  ssl_certificate_key <%= node[:nginx][:dir] %>/ssl/test.key;
-  <% if @application[:ssl_certificate_ca] -%>
-  ssl_client_certificate <%= node[:nginx][:dir] %>/ssl/test.ca;
-  <% end -%>
+  ssl_certificate /ssl/test.crt;
 
   location / {
-    root   <%= @application[:absolute_document_root] %>;
+    root  /temp;
     index  index.html index.htm index.php;
   }
   

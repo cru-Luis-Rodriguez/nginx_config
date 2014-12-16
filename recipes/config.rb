@@ -34,7 +34,7 @@ end
 
 ruby_block "insert_line" do
   block do
-    file = Chef::Util::FileEdit.new("#{node[:nginx][:dir]}/sites-available/crs_web_test")
+    file = Chef::Util::FileEdit.new("/opt/sites-available/crs_web_test")
     file.insert_line_after_match("index.php", "this line was added")
     file.write_file
   end

@@ -17,6 +17,10 @@
 # limitations under the License.
 #
 
+line1 = '#add headers if index.html'
+line2 = 'if ($request_uri = "/") {'
+line3 = 'add_header Cache-Control "no-cache, no-store, must-revalidate";'
+line4 = '}'
 
 directory "/opt/sites-available" do
     owner "root"
@@ -35,9 +39,13 @@ end
 ruby_block "insert_line" do
   block do
     file = Chef::Util::FileEdit.new("/opt/sites-available/crs_web_test")
-    file.insert_line_after_match("index.php", "this line was added")
+    file.insert_line_after_match("index.php", "#{line4}")
+    file.insert_line_after_match("index.php", "#{line3}")
+    file.insert_line_after_match("index.php", "#{line2}")
+    file.insert_line_after_match("index.php", "#{line1}")
     file.write_file
   end
+not_if "grep -q #{line1} /opt/sites-available/crs_web_test""
 end
 
 

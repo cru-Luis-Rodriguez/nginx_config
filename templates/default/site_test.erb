@@ -7,10 +7,6 @@ server {
     root   test;
     index  index.html index.htm index.php;
 
-    #add headers if index.html
-    if ($request_uri = "/") {
-      add_header Cache-Control "no-cache, no-store, must-revalidate";
-    }
   }
   
   # Block all svn access

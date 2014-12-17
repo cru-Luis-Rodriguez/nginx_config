@@ -1,0 +1,28 @@
+server {
+  listen   80;
+  server_name  stage.eventhub.org stage.eventregistrationtool.com crs_web web4;
+  access_log  /var/log/nginx/stage.eventhub.org.access.log;
+
+  location / {
+    root   /srv/www/crs_web/current/;
+    index  index.html index.htm index.php;
+  }
+  
+  # Block all svn access
+  if ($request_uri ~* ^.*\.svn.*$) {
+     return 404;
+  }
+  
+  # Block all git access
+  if ($request_uri ~* ^.*\.git.*$) {
+     return 404;
+  }
+  
+  location /nginx_status {
+    stub_status on;
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+  }
+  
+}

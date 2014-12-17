@@ -11,5 +11,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[nginx_config::config]
+      - recipe[nginx_config::add_headers]
     attributes:

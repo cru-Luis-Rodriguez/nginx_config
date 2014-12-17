@@ -36,6 +36,20 @@ template "/opt/sites-available/crs_web_test" do
   mode 0644
 end
 
+template "/opt/sites-available/crs_web" do
+  source "crs_web.erb"
+  owner "root"
+  group "root"
+  mode 0644
+end
+
+template "/opt/sites-available/eventhub" do
+  source "eventhub.erb"
+  owner "root"
+  group "root"
+  mode 0644
+end
+
 ruby_block "insert_line" do
   block do
     file = Chef::Util::FileEdit.new("/opt/sites-available/crs_web_test")
@@ -46,6 +60,31 @@ ruby_block "insert_line" do
     file.write_file
   end
 not_if "grep -q #{line1} /opt/sites-available/crs_web_test"
+end
+
+
+ruby_block "insert_line" do
+  block do
+    file = Chef::Util::FileEdit.new("/opt/sites-available/crs_web")
+    file.insert_line_after_match("index.php", "#{line4}")
+    file.insert_line_after_match("index.php", "#{line3}")
+    file.insert_line_after_match("index.php", "#{line2}")
+    file.insert_line_after_match("index.php", "#{line1}")
+    file.write_file
+  end
+not_if "grep -q #{line1} /opt/sites-available/crs_web"
+end
+
+ruby_block "insert_line" do
+  block do
+    file = Chef::Util::FileEdit.new("/opt/sites-available/eventhub")
+    file.insert_line_after_match("index.php", "#{line4}")
+    file.insert_line_after_match("index.php", "#{line3}")
+    file.insert_line_after_match("index.php", "#{line2}")
+    file.insert_line_after_match("index.php", "#{line1}")
+    file.write_file
+  end
+not_if "grep -q #{line1} /opt/sites-available/eventhub"
 end
 
 
